@@ -1,4 +1,3 @@
-from argparse import ArgumentError
 from math import sqrt
 
 
@@ -8,7 +7,10 @@ class Grid:
             raise ValueError(f'{scale} is not a square')
 
         self.scale = scale
-        self.rows = [[None for _ in range(scale)] for _ in range(scale)]
+        self.values = [[None for _ in range(scale)] for _ in range(scale)]
+        self.rows = []
+        self.columns = []
+        self.squares = []
 
     def solve(self):
         pass
@@ -16,7 +18,7 @@ class Grid:
     def value(self, column: int, row: int):
         self.validate_dimensions(column, row)
 
-        return self.rows[row][column]
+        return self.values[row][column]
 
     def set_value(self, column: int, row: int, value: int):
         self.validate_dimensions(column, row)
@@ -24,7 +26,7 @@ class Grid:
         if value > self.scale:
             raise ValueError(f'{value} exceeds max value of {self.scale}')
 
-        self.rows[row][column] = value
+        self.values[row][column] = value
 
     def validate_dimensions(self, column, row):
         if column >= self.scale:
@@ -33,7 +35,7 @@ class Grid:
             raise IndexError(f'{row} exceeds max value of {self.scale - 1}')
 
     def print(self):
-        for columns in self.rows:
+        for columns in self.values:
             for column in columns:
                 if column is None:
                     print(' _', end='')
