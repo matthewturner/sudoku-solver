@@ -1,5 +1,13 @@
 from grid import Grid
 
-print('hello')
+file = open('./samples/grid1.txt', 'r')
+definition = file.read()
+file.close()
 
-grid = Grid(4)
+grid = Grid.parse(definition)
+
+print()
+
+grid.print()
+
+print()
