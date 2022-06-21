@@ -1,5 +1,4 @@
-from square import Square
-import pytest
+from sudoku import Square
 
 
 def test_is_valid():

@@ -1,4 +1,4 @@
-from puzzle import Puzzle
+from sudoku import Puzzle
 import pytest
 
 

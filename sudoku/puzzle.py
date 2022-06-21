@@ -1,7 +1,5 @@
 from math import sqrt
-from row import Row
-from column import Column
-from square import Square
+from . import Row, Column, Square
 
 
 class Puzzle:
