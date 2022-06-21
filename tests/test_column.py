@@ -1,5 +1,4 @@
-from column import Column
-import pytest
+from sudoku import Column
 
 
 def test_is_valid():

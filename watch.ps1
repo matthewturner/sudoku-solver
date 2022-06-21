@@ -1,2 +1,2 @@
 Clear-Host
-python ./watcher/watcher.py ./src
+python ./watcher/watcher.py ./sudoku

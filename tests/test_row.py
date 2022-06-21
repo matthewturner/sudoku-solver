@@ -1,4 +1,4 @@
-from row import Row
+from sudoku import Row
 
 
 def test_is_valid():

@@ -1,5 +1,4 @@
-from puzzle import Puzzle
-from puzzle_serializer import PuzzleSerializer
+from sudoku import *
 
 file = open('./samples/puzzle1.txt', 'r')
 definition = file.read()

@@ -1,6 +1,4 @@
-from puzzle import Puzzle
-from puzzle_serializer import PuzzleSerializer
-import pytest
+from sudoku import Puzzle, PuzzleSerializer
 
 
 def test_serialize():
