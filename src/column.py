@@ -7,4 +7,7 @@ class Column:
         self.values = values
 
     def is_valid(self, value: int):
-        return not value in self.values[self.index]
+        for row in self.values:
+            if row[self.index] == value:
+                return False
+        return True

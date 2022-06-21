@@ -1,5 +1,5 @@
-from grid import Grid
-from grid_serializer import GridSerializer
+from puzzle import Puzzle
+from puzzle_serializer import PuzzleSerializer
 import pytest
 
 
@@ -10,7 +10,7 @@ def test_serialize():
  _ _ _ _
  _ _ _ _
     '''.strip() + '\n'
-    actual = GridSerializer.serialize(Grid(4))
+    actual = PuzzleSerializer.serialize(Puzzle(4))
     assert expected == actual
 
 
@@ -21,6 +21,6 @@ def test_deserialize():
  _ _ 3 _
  4 _ _ _
     '''.strip() + '\n'
-    grid = GridSerializer.deserialize(expected)
-    actual = GridSerializer.serialize(grid)
+    puzzle = PuzzleSerializer.deserialize(expected)
+    actual = PuzzleSerializer.serialize(puzzle)
     assert expected == actual

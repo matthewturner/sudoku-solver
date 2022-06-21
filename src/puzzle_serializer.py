@@ -1,9 +1,10 @@
-from grid import Grid
+from puzzle import Puzzle
 
-class GridSerializer:
-    def serialize(self):
+
+class PuzzleSerializer:
+    def serialize(puzzle):
         definition = ''
-        for columns in self.values:
+        for columns in puzzle.values:
             for column in columns:
                 if column is None:
                     definition += ' _'
@@ -18,15 +19,15 @@ class GridSerializer:
                     .strip()
                     .split(' '))
 
-        grid = Grid(scale)
+        puzzle = Puzzle(scale)
 
         row = 0
         for line in definition.splitlines():
             column = 0
             for num in line.strip().split(' '):
                 if num != '_':
-                    grid.set_value(column, row, int(num))
+                    puzzle.set_value(column, row, int(num))
                 column += 1
             row += 1
 
-        return grid
+        return puzzle

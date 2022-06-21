@@ -1,17 +1,17 @@
-from grid import Grid
+from puzzle import Puzzle
 import pytest
 
 
 def test_square_number():
-    assert Grid(4)
+    assert Puzzle(4)
 
 
 def test_non_square_number():
     with pytest.raises(ValueError):
-        Grid(5)
+        Puzzle(5)
 
 
 def test_value_at_index():
-    target = Grid(4)
+    target = Puzzle(4)
     target.set_value(2, 2, 4)
     assert target.value(2, 2) == 4

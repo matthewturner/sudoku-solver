@@ -11,7 +11,7 @@ def test_is_valid():
 
 
 def test_is_valid():
-    values = [[1, 2, None, 4],
+    values = [[1, None, None, 4],
               [2, 1, 3, 4]]
     target = Column(0, values)
     actual = not target.is_valid(2)

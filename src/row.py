@@ -7,4 +7,4 @@ class Row:
         self.values = values
 
     def is_valid(self, value: int):
-        return not value in self.values
+        return not value in self.values[self.index]

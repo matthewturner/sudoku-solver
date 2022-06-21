@@ -1,15 +1,17 @@
-from grid import Grid
-from grid_serializer import GridSerializer
+from puzzle import Puzzle
+from puzzle_serializer import PuzzleSerializer
 
-file = open('./samples/grid1.txt', 'r')
+file = open('./samples/puzzle1.txt', 'r')
 definition = file.read()
 file.close()
 
-grid = GridSerializer.deserialize(definition)
+puzzle = PuzzleSerializer.deserialize(definition)
+
+puzzle.set_value(8, 8, 8)
 
 print()
 
-definition = GridSerializer.serialize(grid)
+definition = PuzzleSerializer.serialize(puzzle)
 print(definition)
 
 print()
