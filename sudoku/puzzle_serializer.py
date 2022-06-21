@@ -1,4 +1,4 @@
-from puzzle import Puzzle
+from . import Puzzle
 
 
 class PuzzleSerializer:
