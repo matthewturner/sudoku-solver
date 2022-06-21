@@ -12,9 +12,6 @@ class Grid:
         self.columns = []
         self.squares = []
 
-    def solve(self):
-        pass
-
     def value(self, column: int, row: int):
         self.validate_dimensions(column, row)
 
@@ -33,31 +30,3 @@ class Grid:
             raise IndexError(f'{column} exceeds max value of {self.scale - 1}')
         if row >= self.scale:
             raise IndexError(f'{row} exceeds max value of {self.scale - 1}')
-
-    def print(self):
-        for columns in self.values:
-            for column in columns:
-                if column is None:
-                    print(' _', end='')
-                else:
-                    print(f' {column}', end='')
-            print()
-
-    def parse(definition: str):
-        scale = len(definition
-                    .splitlines()[0]
-                    .strip()
-                    .split(' '))
-
-        grid = Grid(scale)
-
-        row = 0
-        for line in definition.splitlines():
-            column = 0
-            for num in line.strip().split(' '):
-                if num != '_':
-                    grid.set_value(column, row, int(num))
-                column += 1
-            row += 1
-
-        return grid
