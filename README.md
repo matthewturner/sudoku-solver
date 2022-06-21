@@ -1,5 +1,9 @@
 # Sudoku Solver
 
+The obligatory sudoku solver
+
+## Running it in console
+
 Run the following:
 
 `./run.ps1`
