@@ -26,7 +26,7 @@ class PuzzleSerializer:
             column = 0
             for num in line.strip().split(' '):
                 if num != '_':
-                    puzzle.set_value(column, row, int(num))
+                    puzzle.set(column, row, int(num))
                 column += 1
             row += 1
 
