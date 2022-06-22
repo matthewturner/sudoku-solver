@@ -8,15 +8,15 @@ class Puzzle:
             raise ValueError(f'{scale} is not a square')
 
         self.scale = scale
-        self.values = [[None for _ in range(scale)] for _ in range(scale)]
+        self.grid = [[None for _ in range(scale)] for _ in range(scale)]
 
-        self.rows = [Row(index, self.values)
+        self.rows = [Row(index, self.grid)
                      for index in range(scale)]
 
-        self.columns = [Column(index, self.values)
+        self.columns = [Column(index, self.grid)
                         for index in range(scale)]
 
-        self.squares = [Square(index, self.values)
+        self.squares = [Square(index, self.grid)
                         for index in range(scale)]
 
     def is_valid(self, column: int, row: int, value: int):
@@ -42,7 +42,7 @@ class Puzzle:
     def value(self, column: int, row: int):
         self.validate_dimensions(column, row)
 
-        return self.values[row][column]
+        return self.grid[row][column]
 
     def set_value(self, column: int, row: int, value: int):
         self.validate_dimensions(column, row)
@@ -54,7 +54,7 @@ class Puzzle:
             raise ValueError(
                 f'{value} is not valid at location ({column},{row})')
 
-        self.values[row][column] = value
+        self.grid[row][column] = value
 
     def validate_dimensions(self, column, row):
         if column >= self.scale:

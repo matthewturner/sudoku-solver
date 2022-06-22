@@ -4,8 +4,8 @@ from . import Puzzle
 class PuzzleSerializer:
     def serialize(puzzle):
         definition = ''
-        for columns in puzzle.values:
-            for column in columns:
+        for row in puzzle.grid:
+            for column in row:
                 if column is None:
                     definition += ' _'
                 else:
