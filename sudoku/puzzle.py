@@ -4,24 +4,32 @@ from . import Row, Column, Square
 
 
 class Puzzle:
-    def __init__(self, size: int, grid: array = None):
-        if sqrt(size).is_integer() is False:
+    def __init__(self, size: int = None, grid: array = None):
+        if size is None and grid is None:
+            raise ValueError('Size or grid must be supplied')
+        
+        if size is None:
+            size = len(grid)
+        if not sqrt(size).is_integer():
             raise ValueError(f'{size} is not a square')
-
         self.size = size
+
         if grid is None:
             self.grid = [[None for _ in range(size)] for _ in range(size)]
         else:
+            for row in grid:
+                if len(row) != size:
+                    raise ValueError('Grid is malformed')
             self.grid = grid
 
         self.rows = [Row(index, self.grid)
-                     for index in range(size)]
+                     for index in range(self.size)]
 
         self.columns = [Column(index, self.grid)
-                        for index in range(size)]
+                        for index in range(self.size)]
 
         self.squares = [Square(index, self.grid)
-                        for index in range(size)]
+                        for index in range(self.size)]
 
     def is_valid(self, column: int, row: int, value: int):
         self.__validate_dimensions(column, row)
