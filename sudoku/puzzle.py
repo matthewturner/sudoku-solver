@@ -26,7 +26,7 @@ class Puzzle:
                       Square(self.grid)]
 
     def is_valid(self, column: int, row: int, value: int):
-        self.__validate_dimensions(column, row)
+        self.__validate_value(value)
 
         for rule in self.rules:
             if not rule.is_valid(column, row, value):
@@ -38,41 +38,27 @@ class Puzzle:
         return not self.value(column, row) is None
 
     def value(self, column: int, row: int):
-        self.__validate_dimensions(column, row)
-
         return self.grid[row][column]
 
     def try_set(self, column: int, row: int, value: int):
+        self.__validate_value(value)
+
         if self.is_valid(column, row, value):
-            self.__safe_set(column, row, value)
+            self.grid[row][column] = value
             return True
 
         return False
 
-    def clear(self, column: int, row: int):
-        self.__validate_dimensions(column, row)
-        self.__safe_set(column, row, None)
-
     def set(self, column: int, row: int, value: int):
-        self.__validate_dimensions(column, row)
-
-        if value < 1:
-            raise ValueError(f'{value} must be between 1 and {self.size}')
-
-        if value > self.size:
-            raise ValueError(f'{value} exceeds max value of {self.size}')
-
-        if not self.is_valid(column, row, value):
+        if not self.try_set(column, row, value):
             raise ValueError(
                 f'{value} is not valid at location ({column},{row})')
 
-        self.__safe_set(column, row, value)
+    def clear(self, column: int, row: int):
+        self.grid[row][column] = None
 
-    def __safe_set(self, column: int, row: int, value: int):
-        self.grid[row][column] = value
-
-    def __validate_dimensions(self, column, row):
-        if column >= self.size:
-            raise IndexError(f'{column} exceeds max value of {self.size - 1}')
-        if row >= self.size:
-            raise IndexError(f'{row} exceeds max value of {self.size - 1}')
+    def __validate_value(self, value):
+        if value < 1:
+            raise ValueError(f'{value} must be between 1 and {self.size}')
+        if value > self.size:
+            raise ValueError(f'{value} exceeds max value of {self.size}')
