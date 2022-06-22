@@ -3,7 +3,7 @@ from . import Puzzle
 
 class Solver:
     def solve(self, puzzle: Puzzle):
-        self.__solve(puzzle, 0, 0)
+        return self.__solve(puzzle, 0, 0)
 
     def __solve(self, puzzle: Puzzle, column: int, row: int):
         if row == puzzle.size:

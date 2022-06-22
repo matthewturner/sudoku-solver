@@ -7,6 +7,8 @@ file.close()
 puzzle = PuzzleSerializer.deserialize(definition)
 
 print()
+print('Puzzle:')
+print()
 
 definition = PuzzleSerializer.serialize(puzzle)
 print(definition)
@@ -14,11 +16,13 @@ print(definition)
 print()
 
 solver = Solver()
-solver.solve(puzzle)
+if solver.solve(puzzle):
+    print('Solution found:')
+    print()
 
-print()
+    definition = PuzzleSerializer.serialize(puzzle)
+    print(definition)
 
-definition = PuzzleSerializer.serialize(puzzle)
-print(definition)
-
-print()
+    print()
+else:
+    print('No solution found')
