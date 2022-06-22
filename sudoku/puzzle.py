@@ -7,7 +7,7 @@ class Puzzle:
     def __init__(self, size: int = None, grid: array = None):
         if size is None and grid is None:
             raise ValueError('Size or grid must be supplied')
-        
+
         if size is None:
             size = len(grid)
         if not sqrt(size).is_integer():
@@ -22,26 +22,16 @@ class Puzzle:
                     raise ValueError('Grid is malformed')
             self.grid = grid
 
-        self.rows = [Row(index, self.grid)
-                     for index in range(self.size)]
-
-        self.columns = [Column(index, self.grid)
-                        for index in range(self.size)]
-
-        self.squares = [Square(index, self.grid)
-                        for index in range(self.size)]
+        self.rules = [Row(self.grid),
+                      Column(self.grid),
+                      Square(self.grid)]
 
     def is_valid(self, column: int, row: int, value: int):
         self.__validate_dimensions(column, row)
 
-        if not self.columns[column].is_valid(value):
-            return False
-
-        if not self.rows[row].is_valid(value):
-            return False
-
-        if not self.square_at(column, row).is_valid(value):
-            return False
+        for rule in self.rules:
+            if not rule.is_valid(column, row, value):
+                return False
 
         return True
 
