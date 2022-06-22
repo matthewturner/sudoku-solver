@@ -14,12 +14,12 @@ class PuzzleSerializer:
         return definition
 
     def deserialize(definition: str):
-        scale = len(definition
-                    .splitlines()[0]
-                    .strip()
-                    .split(' '))
+        size = len(definition
+                   .splitlines()[0]
+                   .strip()
+                   .split(' '))
 
-        puzzle = Puzzle(scale)
+        puzzle = Puzzle(size)
 
         row = 0
         for line in definition.splitlines():

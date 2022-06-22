@@ -1,23 +1,27 @@
+import array
 from math import sqrt
 from . import Row, Column, Square
 
 
 class Puzzle:
-    def __init__(self, scale: int):
-        if sqrt(scale).is_integer() is False:
-            raise ValueError(f'{scale} is not a square')
+    def __init__(self, size: int, grid: array = None):
+        if sqrt(size).is_integer() is False:
+            raise ValueError(f'{size} is not a square')
 
-        self.scale = scale
-        self.grid = [[None for _ in range(scale)] for _ in range(scale)]
+        self.size = size
+        if grid is None:
+            self.grid = [[None for _ in range(size)] for _ in range(size)]
+        else:
+            self.grid = grid
 
         self.rows = [Row(index, self.grid)
-                     for index in range(scale)]
+                     for index in range(size)]
 
         self.columns = [Column(index, self.grid)
-                        for index in range(scale)]
+                        for index in range(size)]
 
         self.squares = [Square(index, self.grid)
-                        for index in range(scale)]
+                        for index in range(size)]
 
     def is_valid(self, column: int, row: int, value: int):
         self.validate_dimensions(column, row)
@@ -47,8 +51,11 @@ class Puzzle:
     def set_value(self, column: int, row: int, value: int):
         self.validate_dimensions(column, row)
 
-        if value > self.scale:
-            raise ValueError(f'{value} exceeds max value of {self.scale}')
+        if value > self.size:
+            raise ValueError(f'{value} exceeds max value of {self.size}')
+
+        if value < 1:
+            raise ValueError(f'{value} must be between 1 and {self.size}')
 
         if not self.is_valid(column, row, value):
             raise ValueError(
@@ -57,7 +64,7 @@ class Puzzle:
         self.grid[row][column] = value
 
     def validate_dimensions(self, column, row):
-        if column >= self.scale:
-            raise IndexError(f'{column} exceeds max value of {self.scale - 1}')
-        if row >= self.scale:
-            raise IndexError(f'{row} exceeds max value of {self.scale - 1}')
+        if column >= self.size:
+            raise IndexError(f'{column} exceeds max value of {self.size - 1}')
+        if row >= self.size:
+            raise IndexError(f'{row} exceeds max value of {self.size - 1}')
