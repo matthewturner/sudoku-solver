@@ -17,9 +17,8 @@ class Puzzle:
         if grid is None:
             self.grid = [[None for _ in range(size)] for _ in range(size)]
         else:
-            for row in grid:
-                if len(row) != size:
-                    raise ValueError('Grid is malformed')
+            if True in (len(row) != size for row in grid):
+                raise ValueError('Grid is malformed')
             self.grid = grid
 
         self.rules = [Row(self.grid),
@@ -35,11 +34,8 @@ class Puzzle:
 
         return True
 
-    def square_at(self, column: int, row: int):
-        for sq in self.squares:
-            if row in sq.rows and column in sq.columns:
-                return sq
-        return None
+    def has_value(self, column: int, row: int):
+        return not self.value(column, row) is None
 
     def value(self, column: int, row: int):
         self.__validate_dimensions(column, row)
@@ -60,11 +56,11 @@ class Puzzle:
     def set(self, column: int, row: int, value: int):
         self.__validate_dimensions(column, row)
 
-        if value > self.size:
-            raise ValueError(f'{value} exceeds max value of {self.size}')
-
         if value < 1:
             raise ValueError(f'{value} must be between 1 and {self.size}')
+
+        if value > self.size:
+            raise ValueError(f'{value} exceeds max value of {self.size}')
 
         if not self.is_valid(column, row, value):
             raise ValueError(

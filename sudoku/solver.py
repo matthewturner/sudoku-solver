@@ -12,7 +12,7 @@ class Solver:
                 return True
             row = 0
 
-        if puzzle.value(column, row) is not None:
+        if puzzle.has_value(column, row):
             return self.__solve(puzzle, column, row + 1)
 
         for candidate in range(1, puzzle.size + 1):
