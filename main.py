@@ -16,6 +16,15 @@ print(definition)
 print()
 
 solver = Solver()
+
+
+def print_state(puzzle: Puzzle):
+    definition = PuzzleSerializer.serialize(puzzle)
+    print(definition)
+
+
+solver.row_change_listener = print_state
+
 if solver.solve(puzzle):
     print('Solution found:')
     print()

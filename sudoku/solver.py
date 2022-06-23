@@ -2,11 +2,17 @@ from . import Puzzle
 
 
 class Solver:
+    def __init__(self):
+        self.row_change_listener = None
+
     def solve(self, puzzle: Puzzle):
         return self.__solve(puzzle, 0, 0)
 
     def __solve(self, puzzle: Puzzle, column: int, row: int):
         if row == puzzle.size:
+            if not self.row_change_listener is None:
+                self.row_change_listener(puzzle)
+
             column += 1
             if column == puzzle.size:
                 return True
