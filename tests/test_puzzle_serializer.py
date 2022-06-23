@@ -22,3 +22,33 @@ def test_deserialize():
     puzzle = PuzzleSerializer.deserialize(expected)
     actual = PuzzleSerializer.serialize(puzzle)
     assert expected == actual
+
+
+def test_deserialize_large_grid():
+    input = ' ' + '''
+ _ _  _ _ _ _ _ _ _ _ _ _ _ _ _ _
+ _ _ 13 _ _ _ _ _ _ _ _ _ _ _ _ _
+    '''.strip() + '\n'
+
+    expected = '  ' + '''
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _ 13  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  
+'''.strip() + '\n'
+
+    puzzle = PuzzleSerializer.deserialize(input)
+    actual = PuzzleSerializer.serialize(puzzle)
+    assert expected == actual

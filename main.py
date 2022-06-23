@@ -1,6 +1,6 @@
 from sudoku import *
 
-file = open('./samples/puzzle2.txt', 'r')
+file = open('./samples/puzzle3.txt', 'r')
 definition = file.read()
 file.close()
 
