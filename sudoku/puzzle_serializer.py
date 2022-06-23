@@ -31,13 +31,14 @@ class PuzzleSerializer:
             for num in line.strip().split(' '):
                 if num != '_':
                     puzzle.set(
-                        column, row, PuzzleSerializer.letter_to_num(num))
+                        column, row, PuzzleSerializer.to_number(num))
                 column += 1
             row += 1
 
         return puzzle
 
-    def letter_to_num(letter: str):
-        if ord(letter) in range(ord('A'), ord('Z')):
-            return ord(letter)
-        return int(letter)
+    def to_number(candidate: str):
+        if len(candidate) == 1:
+            if ord(candidate) in range(ord('A'), ord('Z')):
+                return ord(candidate) - ord('@')
+        return int(candidate)
