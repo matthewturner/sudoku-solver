@@ -18,27 +18,36 @@ class PuzzleSerializer:
         while '  ' in definition:
             definition = definition.replace('  ', ' ')
 
-        size = len(definition
-                   .splitlines()[0]
-                   .strip()
-                   .split(' '))
+        grid = []
 
-        puzzle = Puzzle(size)
-
-        row = 0
+        contains_letters = False
+        contains_numbers = False
         for line in definition.splitlines():
-            column = 0
+            row = []
+            grid.append(row)
             for num in line.strip().split(' '):
-                if num != '_':
-                    puzzle.set(
-                        column, row, PuzzleSerializer.to_number(num))
-                column += 1
-            row += 1
+                if num == '_':
+                    row.append(None)
+                else:
+                    number = PuzzleSerializer.to_number(num)
+                    if number <= 9:
+                        contains_numbers = True
+                    if number >= ord('A'):
+                        contains_letters = True
+                    row.append(number)
 
-        return puzzle
+        candidates = None
+        if contains_letters and contains_numbers:
+            candidates = list(range(0, 10)) + list(range(ord('A'), ord('G')))
+        elif contains_letters:
+            candidates = range(ord('A'), ord('Z'))
+        else:
+            candidates = range(1, len(grid))
+
+        return Puzzle(grid=grid, candidates=candidates)
 
     def to_number(candidate: str):
         if len(candidate) == 1:
             if ord(candidate) in range(ord('A'), ord('Z')):
-                return ord(candidate) - ord('@')
+                return ord(candidate)
         return int(candidate)

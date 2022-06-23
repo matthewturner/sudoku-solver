@@ -63,7 +63,5 @@ class Puzzle:
         self.grid[row][column] = None
 
     def __validate_value(self, value):
-        if value < 1:
-            raise ValueError(f'{value} must be between 1 and {self.size}')
-        if value > self.size:
-            raise ValueError(f'{value} exceeds max value of {self.size}')
+        if not value in self.candidates:
+            raise ValueError(f'{value} must be one of {self.candidates}')
