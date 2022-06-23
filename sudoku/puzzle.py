@@ -4,7 +4,7 @@ from . import Row, Column, Square
 
 
 class Puzzle:
-    def __init__(self, size: int = None, grid: array = None):
+    def __init__(self, size: int = None, grid: array = None, candidates: array = None):
         if size is None and grid is None:
             raise ValueError('Size or grid must be supplied')
 
@@ -24,6 +24,11 @@ class Puzzle:
         self.rules = [Row(self.grid),
                       Column(self.grid),
                       Square(self.grid)]
+
+        if candidates is None:
+            self.candidates = range(1, self.size + 1)
+        else:
+            self.candidates = candidates
 
     def is_valid(self, column: int, row: int, value: int):
         self.__validate_value(value)

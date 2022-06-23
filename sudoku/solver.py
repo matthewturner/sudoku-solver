@@ -15,7 +15,7 @@ class Solver:
         if puzzle.has_value(column, row):
             return self.__solve(puzzle, column, row + 1)
 
-        for candidate in range(1, puzzle.size + 1):
+        for candidate in puzzle.candidates:
             if puzzle.try_set(column, row, candidate):
                 if self.__solve(puzzle, column, row + 1):
                     return True
