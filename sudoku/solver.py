@@ -3,7 +3,7 @@ from . import Puzzle
 
 class Solver:
     def __init__(self):
-        self.row_change_listener = None
+        self.column_change_listener = None
 
     def solve(self, puzzle: Puzzle):
         notes = self.__create_notes(puzzle)
@@ -12,13 +12,12 @@ class Solver:
 
     def __solve(self, puzzle: Puzzle, notes: dict, column: int, row: int):
         if row == puzzle.size:
-            if not self.row_change_listener is None:
-                self.row_change_listener(puzzle)
-
             column += 1
             if column == puzzle.size:
                 return True
             row = 0
+            if not self.column_change_listener is None:
+                self.column_change_listener((column, row), puzzle)
 
         if puzzle.has_value(column, row):
             return self.__solve(puzzle, notes, column, row + 1)

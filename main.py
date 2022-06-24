@@ -20,13 +20,19 @@ print()
 
 solver = Solver()
 
-
-def print_state(puzzle: Puzzle):
-    definition = PuzzleSerializer.serialize(puzzle)
-    print(definition)
+max_column = 0
 
 
-solver.row_change_listener = print_state
+def print_state(location: tuple, puzzle: Puzzle):
+    column, _ = location
+    global max_column
+    if column >= max_column:
+        max_column = column
+        definition = PuzzleSerializer.serialize(puzzle)
+        print(definition)
+
+
+solver.column_change_listener = print_state
 
 if solver.solve(puzzle):
     print('Solution found:')
