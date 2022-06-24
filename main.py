@@ -1,6 +1,9 @@
+import sys
 from sudoku import *
 
-file = open('./samples/puzzle3.txt', 'r')
+path = sys.argv[1] if len(sys.argv) > 1 else './samples/puzzle2.txt'
+
+file = open(path, 'r')
 definition = file.read()
 file.close()
 

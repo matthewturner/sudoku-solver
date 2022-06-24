@@ -1,2 +1,2 @@
 Clear-Host
-python ./main.py
+python ./main.py $args
