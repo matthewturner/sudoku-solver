@@ -3,14 +3,25 @@ from . import Puzzle
 
 class PuzzleSerializer:
     def serialize(puzzle: Puzzle):
-        justification = len(str(puzzle.size)) + 1
+        justification = 2
+        only_numbers = 10 in puzzle.candidates
+        if only_numbers:
+            justification = len(str(puzzle.size)) + 1
+
         definition = ''
+
         for row in puzzle.grid:
             for value in row:
                 if value is None:
                     definition += '_'.rjust(justification)
                 else:
-                    definition += str(value).rjust(justification)
+                    if only_numbers:
+                        definition += str(value).rjust(justification)
+                    else:
+                        if value <= 9:
+                            definition += str(value).rjust(justification)
+                        else:
+                            definition += chr(value).rjust(justification)
             definition += '\n'
         return definition
 
