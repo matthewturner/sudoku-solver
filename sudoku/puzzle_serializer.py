@@ -42,7 +42,7 @@ class PuzzleSerializer:
         elif contains_letters:
             candidates = range(ord('A'), ord('Z'))
         else:
-            candidates = range(1, len(grid))
+            candidates = range(1, len(grid) + 1)
 
         return Puzzle(grid=grid, candidates=candidates)
 
