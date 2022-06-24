@@ -12,9 +12,8 @@ class Solver:
 
     def __solve(self, puzzle: Puzzle, notes: dict, column: int, row: int):
         if row == puzzle.size:
-            if row % 3 == 0:
-                if not self.row_change_listener is None:
-                    self.row_change_listener(puzzle)
+            if not self.row_change_listener is None:
+                self.row_change_listener(puzzle)
 
             column += 1
             if column == puzzle.size:
