@@ -1,9 +1,9 @@
-from array import array
+import numpy
 from math import sqrt
 
 
 class Square:
-    def __init__(self, grid: array):
+    def __init__(self, grid: numpy.array):
         self.grid = grid
         self.size = int(sqrt(len(grid)))
 

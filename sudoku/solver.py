@@ -6,7 +6,7 @@ class Solver:
         self.column_change_listener = None
 
     def solve(self, puzzle: Puzzle):
-        notes = self.__create_notes(puzzle)
+        notes = self.create_notes(puzzle)
         self.__apply_single_candidates(puzzle, notes)
         return self.__solve(puzzle, notes, 0, 0)
 
@@ -39,7 +39,7 @@ class Solver:
                 puzzle.set(column, row, note[0])
                 note.clear()
 
-    def __create_notes(self, puzzle: Puzzle):
+    def create_notes(self, puzzle: Puzzle):
         notes = {}
         for row in range(0, puzzle.size):
             for column in range(0, puzzle.size):
