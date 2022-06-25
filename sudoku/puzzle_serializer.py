@@ -1,4 +1,5 @@
 from . import Puzzle
+import numpy
 
 
 class PuzzleSerializer:
@@ -55,7 +56,7 @@ class PuzzleSerializer:
         else:
             candidates = range(1, len(grid) + 1)
 
-        return Puzzle(grid=grid, candidates=candidates)
+        return Puzzle(grid=numpy.array(grid), candidates=candidates)
 
     def to_number(candidate: str):
         if len(candidate) == 1:

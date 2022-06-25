@@ -15,5 +15,6 @@ Or to run when files change:
 ## Dependencies
 
 ```
+pip install numpy
 pip install watchdog
 ```

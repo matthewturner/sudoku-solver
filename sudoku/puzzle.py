@@ -1,10 +1,12 @@
 import array
 from math import sqrt
+
+import numpy
 from . import Row, Column, Square
 
 
 class Puzzle:
-    def __init__(self, size: int = None, grid: array = None, candidates: array = None):
+    def __init__(self, size: int = None, grid: numpy.array = None, candidates: array = None):
         if size is None and grid is None:
             raise ValueError('Size or grid must be supplied')
 
@@ -15,7 +17,8 @@ class Puzzle:
         self.size = size
 
         if grid is None:
-            self.grid = [[None for _ in range(size)] for _ in range(size)]
+            self.grid = numpy.array(
+                [[None for _ in range(size)] for _ in range(size)])
         else:
             if True in (len(row) != size for row in grid):
                 raise ValueError('Grid is malformed')
@@ -43,13 +46,13 @@ class Puzzle:
         return not self.value(column, row) is None
 
     def value(self, column: int, row: int):
-        return self.grid[row][column]
+        return self.grid[row, column]
 
     def try_set(self, column: int, row: int, value: int):
         self.__validate_value(value)
 
         if self.is_valid(column, row, value):
-            self.grid[row][column] = value
+            self.grid[row, column] = value
             return True
 
         return False
@@ -60,7 +63,7 @@ class Puzzle:
                 f'{value} is not valid at location ({column},{row})')
 
     def clear(self, column: int, row: int):
-        self.grid[row][column] = None
+        self.grid[row, column] = None
 
     def __validate_value(self, value):
         if not value in self.candidates:
