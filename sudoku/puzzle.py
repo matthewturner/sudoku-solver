@@ -65,6 +65,11 @@ class Puzzle:
     def clear(self, column: int, row: int):
         self.grid[row, column] = None
 
+    def update_from(self, other):
+        for row in range(0, self.size):
+            for column in range(0, self.size):
+                self.grid[column, row] = other.grid[column, row]
+
     def __validate_value(self, value):
         if not value in self.candidates:
             raise ValueError(f'{value} must be one of {self.candidates}')

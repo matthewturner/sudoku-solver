@@ -15,16 +15,28 @@ class ParallelSolver:
         processes = []
         start = self.__first_empty_cell(puzzle)
         definition = PuzzleSerializer.serialize(puzzle)
+        manager = multiprocessing.Manager()
+        results = []
         for candidate in notes[start]:
             column, row = start
+            result = manager.dict()
+            results.append(result)
             processes.append(multiprocessing.Process(
-                target=self.psolve, args=(definition, column, row, candidate)))
+                target=self.psolve, args=(result, definition, column, row, candidate)))
 
         for proc in processes:
             proc.start()
 
         for proc in processes:
             proc.join()
+
+        for result in results:
+            if result['success']:
+                solution = PuzzleSerializer.deserialize(result['grid'])
+                puzzle.update_from(solution)
+                return True
+
+        return False
 
     def __first_empty_cell(self, puzzle: Puzzle):
         for row in range(0, puzzle.size):
@@ -33,10 +45,15 @@ class ParallelSolver:
                     return (column, row)
         return None
 
-    def psolve(self, definition: str, column: int, row: int, seed: int):
+    def psolve(self, result: dict, definition: str, column: int, row: int, seed: int):
+        print(f'Solving ({column},{row}) with {seed}...')
+
         puzzle = PuzzleSerializer.deserialize(definition)
         puzzle.set(column, row, seed)
 
         solver = Solver()
         if solver.solve(puzzle):
-            print('solution found')
+            result['success'] = True
+            result['grid'] = PuzzleSerializer.serialize(puzzle)
+        else:
+            result['success'] = False
