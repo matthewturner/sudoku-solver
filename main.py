@@ -34,6 +34,7 @@ def main():
     solver.column_change_listener = print_state
 
     if solver.solve(puzzle):
+        print()
         print('Solution found:')
         print()
 

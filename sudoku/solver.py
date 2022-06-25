@@ -7,7 +7,7 @@ class Solver:
 
     def solve(self, puzzle: Puzzle):
         notes = self.create_notes(puzzle)
-        self.__apply_single_candidates(puzzle, notes)
+        self.apply_single_candidates(puzzle, notes)
         return self.__solve(puzzle, notes, 0, 0)
 
     def __solve(self, puzzle: Puzzle, notes: dict, column: int, row: int):
@@ -31,7 +31,7 @@ class Solver:
 
         return False
 
-    def __apply_single_candidates(self, puzzle: Puzzle, notes: dict):
+    def apply_single_candidates(self, puzzle: Puzzle, notes: dict):
         for location in notes:
             note = notes[location]
             if len(note) == 1:
