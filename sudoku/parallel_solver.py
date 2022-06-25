@@ -1,7 +1,7 @@
 from operator import mul
 
 import numpy
-from . import Puzzle, Solver, PuzzleSerializer
+from . import Puzzle, RecursiveSolver, PuzzleSerializer, Notary
 import multiprocessing
 
 
@@ -10,16 +10,19 @@ class ParallelSolver:
         self.column_change_listener = None
 
     def solve(self, puzzle: Puzzle):
-        solver = Solver()
-        notes = solver.create_notes(puzzle)
-        solver.apply_single_candidates(puzzle, notes)
+        notary = Notary()
+        notes = notary.notarize(puzzle)
+        notary.apply_single_candidates(puzzle)
         processes = []
-        start = self.__first_empty_cell(puzzle)
+        first_empty_cell = self.__first_empty_cell(puzzle)
+        if first_empty_cell is None:
+            return True
+
         definition = PuzzleSerializer.serialize(puzzle)
         manager = multiprocessing.Manager()
         results = []
-        for candidate in notes[start]:
-            column, row = start
+        for candidate in notes[first_empty_cell]:
+            column, row = first_empty_cell
             result = manager.dict()
             results.append(result)
             processes.append(multiprocessing.Process(
@@ -54,7 +57,7 @@ class ParallelSolver:
         puzzle = PuzzleSerializer.deserialize(definition)
         puzzle.set(column, row, seed)
 
-        solver = Solver()
+        solver = RecursiveSolver()
         if solver.solve(puzzle):
             result['success'] = True
             result['grid'] = PuzzleSerializer.serialize(puzzle)

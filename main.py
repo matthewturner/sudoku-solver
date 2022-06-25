@@ -2,13 +2,9 @@ import sys
 from sudoku import *
 
 
-def print_state(location: tuple, puzzle: Puzzle):
-    column, _ = location
-    global max_column
-    if column >= max_column:
-        max_column = column
-        definition = PuzzleSerializer.serialize(puzzle)
-        print(definition)
+def print_state(puzzle: Puzzle):
+    definition = PuzzleSerializer.serialize(puzzle)
+    print(definition)
 
 
 def main():
@@ -29,9 +25,9 @@ def main():
 
     print()
 
-    solver = ParallelSolver()
+    solver = IterativeSolver()
 
-    solver.column_change_listener = print_state
+    solver.change_listener = print_state
 
     if solver.solve(puzzle):
         print()
