@@ -12,7 +12,6 @@ class ParallelSolver:
     def solve(self, puzzle: Puzzle):
         notary = Notary()
         notes = notary.notarize(puzzle)
-        notary.apply_single_candidates(puzzle)
         processes = []
         first_empty_cell = self.__first_empty_cell(puzzle)
         if first_empty_cell is None:
