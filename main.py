@@ -55,6 +55,8 @@ def binary_matrix():
                 print(' 0', end='')
         count += 1
         print()
+        # if count == 30:
+        #     break
     print()
     print()
 
