@@ -45,9 +45,20 @@ def main():
 
 def binary_matrix():
     matrix = BinaryMatrix.build_from(Puzzle(4))
-    print(matrix.matrix)
+    count = 0
+    for row in matrix.matrix:
+        print(f'{count}:  '.rjust(6), end='')
+        for column in row:
+            if (column):
+                print(' 1', end='')
+            else:
+                print(' 0', end='')
+        count += 1
+        print()
+    print()
+    print()
 
 
 if __name__ == '__main__':
-    main()
+    # main()
     binary_matrix()
