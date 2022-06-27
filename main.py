@@ -1,5 +1,6 @@
 import sys
 from sudoku import *
+from sudoku.solvers.binary_matrix import BinaryMatrix
 
 
 def print_state(puzzle: Puzzle):
@@ -42,5 +43,11 @@ def main():
         print('No solution found')
 
 
+def binary_matrix():
+    matrix = BinaryMatrix.build_from(Puzzle(4))
+    print(matrix.matrix)
+
+
 if __name__ == '__main__':
     main()
+    binary_matrix()

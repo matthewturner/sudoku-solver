@@ -1,3 +1,4 @@
+from .cell import Cell
 from .column import Column
 from .row import Row
-from .square import Square
+from .box import Box

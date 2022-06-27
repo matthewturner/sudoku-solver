@@ -2,7 +2,7 @@ import array
 from math import sqrt
 
 import numpy
-from . import Row, Column, Square
+from . import Cell, Row, Column, Box
 
 
 class Puzzle:
@@ -24,20 +24,21 @@ class Puzzle:
                 raise ValueError('Grid is malformed')
             self.grid = grid
 
-        self.rules = [Row(self.grid),
-                      Column(self.grid),
-                      Square(self.grid)]
-
         if candidates is None:
             self.candidates = range(1, self.size + 1)
         else:
             self.candidates = candidates
 
+        self.constraints = [Cell(self.grid, self.candidates),
+                            Row(self.grid, self.candidates),
+                            Column(self.grid, self.candidates),
+                            Box(self.grid, self.candidates)]
+
     def is_valid(self, column: int, row: int, value: int):
         self.__validate_value(value)
 
-        for rule in self.rules:
-            if not rule.is_valid(column, row, value):
+        for constraint in self.constraints:
+            if not constraint.is_valid(column, row, value):
                 return False
 
         return True

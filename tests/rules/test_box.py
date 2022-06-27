@@ -1,4 +1,4 @@
-from sudoku import Square
+from sudoku import Puzzle, Box
 
 
 def test_is_valid():
@@ -6,7 +6,7 @@ def test_is_valid():
             [None, 1, 2, 4],
             [1, 2, 4, None],
             [1, None, 2, 4]]
-    target = Square(grid)
+    target = Box(grid, [])
     actual = target.is_valid(1, 0, 3)
     assert actual
 
@@ -16,7 +16,7 @@ def test_is_not_valid():
             [None, 1, 2, 4],
             [1, 2, 4, None],
             [1, None, 2, 4]]
-    target = Square(grid)
+    target = Box(grid, [])
     actual = not target.is_valid(0, 1, 3)
     assert actual
 
@@ -26,7 +26,7 @@ def test_is_valid_second():
             [None, 1, 2, 4],
             [1, 2, 4, None],
             [1, None, 2, 4]]
-    target = Square(grid)
+    target = Box(grid, [])
     actual = target.is_valid(1, 3, 3)
     assert actual
 
@@ -36,7 +36,7 @@ def test_is_not_valid_second():
             [None, 1, 2, 4],
             [1, 3, 4, None],
             [1, None, 2, 4]]
-    target = Square(grid)
+    target = Box(grid, [])
     actual = not target.is_valid(1, 3, 3)
     assert actual
 
@@ -46,6 +46,6 @@ def test_is_valid_third():
             [None, None, 2, 4],
             [None, None, 4, None],
             [None, None, 2, 4]]
-    target = Square(grid)
+    target = Box(grid, [])
     actual = target.is_valid(2, 0, 3)
     assert actual

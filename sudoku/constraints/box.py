@@ -1,11 +1,14 @@
-import numpy
+
 from math import sqrt
 
+from numpy import array
+from .base import Base
 
-class Square:
-    def __init__(self, grid: numpy.array):
-        self.grid = grid
+
+class Box(Base):
+    def __init__(self, grid: array, candidates: list):
         self.size = int(sqrt(len(grid)))
+        Base.__init__(self, grid, candidates)
 
     def is_valid(self, column: int, row: int, value: int):
         row_first_index = int(row / self.size) * self.size

@@ -1,10 +1,6 @@
-from array import array
+from .base import Base
 
-
-class Column:
-    def __init__(self, grid: array):
-        self.grid = grid
-
+class Column(Base):
     def is_valid(self, column: int, _: int, value: int):
         for row in self.grid:
             if row[column] == value:
