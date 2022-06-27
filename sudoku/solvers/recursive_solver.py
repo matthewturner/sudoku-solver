@@ -1,4 +1,4 @@
-from . import Puzzle, Notary
+from .. import Puzzle, Notary
 
 
 class RecursiveSolver:

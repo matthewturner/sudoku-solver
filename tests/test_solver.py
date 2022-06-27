@@ -1,10 +1,8 @@
 import numpy
 from sudoku import Puzzle
 import pytest
-from sudoku.iterative_solver import IterativeSolver
-from sudoku.parallel_solver import ParallelSolver
+from sudoku.solvers import IterativeSolver, ParallelSolver, RecursiveSolver
 from sudoku.puzzle_serializer import PuzzleSerializer
-from sudoku.recursive_solver import RecursiveSolver
 
 
 def test_simple_solution():

@@ -1,7 +1,8 @@
 from operator import mul
 
 import numpy
-from . import Puzzle, RecursiveSolver, PuzzleSerializer, Notary
+from . import RecursiveSolver
+from .. import Puzzle, PuzzleSerializer, Notary
 import multiprocessing
 
 
