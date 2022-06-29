@@ -47,15 +47,18 @@ def binary_matrix():
     puzzle = Puzzle(4)
     puzzle.set(1, 0, 4)
     matrix = BinaryMatrix.build_from(puzzle)
-    matrix.clear_clues(puzzle)
+    matrix.clear_clues()
     count = 0
+    width = 100
     for row in matrix.matrix:
         print(f'{count}:  '.rjust(6), end='')
-        for column in row:
+        for index, column in enumerate(row):
+            if index >= width:
+                break
             if (column):
-                print(' 1', end='')
+                print('1', end='')
             else:
-                print(' 0', end='')
+                print('0', end='')
         count += 1
         print()
     print()

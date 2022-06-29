@@ -3,17 +3,17 @@ from .. import Puzzle
 
 
 class BinaryMatrix:
-    def __init__(self, matrix: numpy.array):
+    def __init__(self, matrix: numpy.array, puzzle: Puzzle):
         self.matrix = matrix
+        self.puzzle = puzzle
 
-    def clear_clues(self, puzzle: Puzzle):
+    def clear_clues(self):
         '''Zeroes out the grid where clues already exist in the puzzle'''
-        for r in range(0, puzzle.size):
-            for c in range(0, puzzle.size):
-                if puzzle.has_value(c, r):
-                    for n in range(0, puzzle.size):
-                        column = BinaryMatrix.__calculate_column(
-                            puzzle.size, r, c, n)
+        for r in range(0, self.puzzle.size):
+            for c in range(0, self.puzzle.size):
+                if self.puzzle.has_value(c, r):
+                    for n in range(0, self.puzzle.size):
+                        column = self.__calculate_column(r, c, n)
                         self.matrix[column] = False
 
     def build_from(puzzle: Puzzle):
@@ -23,60 +23,62 @@ class BinaryMatrix:
         matrix = numpy.full(
             shape=(row_count, column_count), fill_value=False, dtype='bool')
 
+        bm = BinaryMatrix(matrix, puzzle)
         row = 0
-        row = BinaryMatrix.__apply_cell_constraint(matrix, puzzle.size, row)
-        row = BinaryMatrix.__apply_row_constraint(matrix, puzzle.size, row)
-        row = BinaryMatrix.__apply_column_constraint(matrix, puzzle.size, row)
-        row = BinaryMatrix.__apply_box_constraint(matrix, puzzle.size, row)
+        row = bm.__apply_cell_constraint(row)
+        row = bm.__apply_row_constraint(row)
+        row = bm.__apply_column_constraint(row)
+        row = bm.__apply_box_constraint(row)
+        return bm
 
-        return BinaryMatrix(matrix)
-
-    def __apply_cell_constraint(matrix: numpy.array, size: int, row: int):
+    def __apply_cell_constraint(self, row: int):
+        size = self.puzzle.size
         for r in range(0, size):
             for c in range(0, size):
                 for n in range(0, size):
-                    column = BinaryMatrix.__calculate_column(
-                        size, r, c, n)
+                    column = self.__calculate_column(r, c, n)
                     # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    matrix[column, row] = True
+                    self.matrix[column, row] = True
                 row += 1
         return row
 
-    def __apply_row_constraint(matrix: numpy.array, size: int, row: int):
+    def __apply_row_constraint(self, row: int):
+        size = self.puzzle.size
         for r in range(0, size):
             for n in range(0, size):
                 for c in range(0, size):
-                    column = BinaryMatrix.__calculate_column(
-                        size, r, c, n)
+                    column = self.__calculate_column(r, c, n)
                     # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    matrix[column, row] = True
+                    self.matrix[column, row] = True
                 row += 1
         return row
 
-    def __apply_column_constraint(matrix: numpy.array, size: int, row: int):
+    def __apply_column_constraint(self, row: int):
+        size = self.puzzle.size
         for c in range(0, size):
             for n in range(0, size):
                 for r in range(0, size):
-                    column = BinaryMatrix.__calculate_column(
-                        size, r, c, n)
+                    column = self.__calculate_column(r, c, n)
                     # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    matrix[column, row] = True
+                    self.matrix[column, row] = True
                 row += 1
         return row
 
-    def __apply_box_constraint(matrix: numpy.array, size: int, row: int):
+    def __apply_box_constraint(self, row: int):
+        size = self.puzzle.size
         box_size = int(numpy.sqrt(size))
         for br in range(0, size, box_size):
             for bc in range(0, size, box_size):
                 for n in range(0, size):
                     for r_delta in range(0, box_size):
                         for c_delta in range(0, box_size):
-                            column = BinaryMatrix.__calculate_column(
-                                size, br + r_delta, bc + c_delta, n)
+                            column = self.__calculate_column(
+                                br + r_delta, bc + c_delta, n)
                             # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                            matrix[column, row] = True
+                            self.matrix[column, row] = True
                     row += 1
         return row
 
-    def __calculate_column(size: int, row: int, column: int, iteration: int):
+    def __calculate_column(self, row: int, column: int, iteration: int):
+        size = self.puzzle.size
         return (row * size * size) + (column * size) + iteration
