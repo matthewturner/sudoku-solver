@@ -44,7 +44,10 @@ def main():
 
 
 def binary_matrix():
-    matrix = BinaryMatrix.build_from(Puzzle(4))
+    puzzle = Puzzle(4)
+    puzzle.set(1, 0, 4)
+    matrix = BinaryMatrix.build_from(puzzle)
+    matrix.clear_clues(puzzle)
     count = 0
     for row in matrix.matrix:
         print(f'{count}:  '.rjust(6), end='')

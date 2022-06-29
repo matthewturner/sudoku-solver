@@ -6,6 +6,16 @@ class BinaryMatrix:
     def __init__(self, matrix: numpy.array):
         self.matrix = matrix
 
+    def clear_clues(self, puzzle: Puzzle):
+        '''Zeroes out the grid where clues already exist in the puzzle'''
+        for r in range(0, puzzle.size):
+            for c in range(0, puzzle.size):
+                if puzzle.has_value(c, r):
+                    for n in range(0, puzzle.size):
+                        column = BinaryMatrix.__calculate_column(
+                            puzzle.size, r, c, n)
+                        self.matrix[column] = False
+
     def build_from(puzzle: Puzzle):
         column_count = (puzzle.size ** 2) * len(puzzle.constraints)
         row_count = puzzle.size ** 3
