@@ -1,5 +1,5 @@
 from .. import Puzzle
-from .binary_matrix import BinaryMatrix
+from .exact_cover_matrix import ExactCoverMatrix
 
 
 class DancingLinksSolver:
@@ -7,4 +7,5 @@ class DancingLinksSolver:
         self.change_listener = None
 
     def solve(self, puzzle: Puzzle):
-        matrix = BinaryMatrix.build_from(puzzle)
+        matrix = ExactCoverMatrix.build_from(puzzle)
+        matrix.clear_clues()

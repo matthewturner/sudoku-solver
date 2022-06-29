@@ -1,6 +1,6 @@
 import sys
 from sudoku import *
-from sudoku.solvers.binary_matrix import BinaryMatrix
+from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
 
 
 def print_state(puzzle: Puzzle):
@@ -43,10 +43,10 @@ def main():
         print('No solution found')
 
 
-def binary_matrix():
+def exact_cover_matrix():
     puzzle = Puzzle(4)
     puzzle.set(1, 0, 4)
-    matrix = BinaryMatrix.build_from(puzzle)
+    matrix = ExactCoverMatrix.build_from(puzzle)
     matrix.clear_clues()
     count = 0
     width = 100
@@ -67,4 +67,4 @@ def binary_matrix():
 
 if __name__ == '__main__':
     # main()
-    binary_matrix()
+    exact_cover_matrix()

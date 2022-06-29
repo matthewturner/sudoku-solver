@@ -2,7 +2,7 @@ import numpy
 from .. import Puzzle
 
 
-class BinaryMatrix:
+class ExactCoverMatrix:
     def __init__(self, matrix: numpy.array, puzzle: Puzzle):
         self.matrix = matrix
         self.puzzle = puzzle
@@ -23,7 +23,7 @@ class BinaryMatrix:
         matrix = numpy.full(
             shape=(row_count, column_count), fill_value=False, dtype='bool')
 
-        bm = BinaryMatrix(matrix, puzzle)
+        bm = ExactCoverMatrix(matrix, puzzle)
         row = 0
         row = bm.__apply_cell_constraint(row)
         row = bm.__apply_row_constraint(row)
