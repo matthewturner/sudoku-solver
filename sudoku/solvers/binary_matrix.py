@@ -5,7 +5,6 @@ from .. import Puzzle
 class BinaryMatrix:
     def __init__(self, matrix: numpy.array):
         self.matrix = matrix
-        self.row = 0
 
     def build_from(puzzle: Puzzle):
         column_count = (puzzle.size ** 2) * len(puzzle.constraints)
