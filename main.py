@@ -58,7 +58,7 @@ def exact_cover_matrix():
             if (column):
                 print('1', end='')
             else:
-                print('0', end='')
+                print('.', end='')
         count += 1
         print()
     print()
