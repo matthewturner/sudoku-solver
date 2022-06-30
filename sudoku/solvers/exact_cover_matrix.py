@@ -13,8 +13,8 @@ class ExactCoverMatrix:
             for c in range(0, self.puzzle.size):
                 if self.puzzle.has_value(c, r):
                     for n in range(0, self.puzzle.size):
-                        column = self.__calculate_column(r, c, n)
-                        self.matrix[column] = False
+                        row_index = self.__calculate_row_index(r, c, n)
+                        self.matrix[row_index] = False
 
     def build_from(puzzle: Puzzle):
         column_count = (puzzle.size ** 2) * len(puzzle.constraints)
@@ -23,48 +23,45 @@ class ExactCoverMatrix:
         matrix = numpy.full(
             shape=(row_count, column_count), fill_value=False, dtype='bool')
 
-        bm = ExactCoverMatrix(matrix, puzzle)
-        row = 0
-        row = bm.__apply_cell_constraint(row)
-        row = bm.__apply_row_constraint(row)
-        row = bm.__apply_column_constraint(row)
-        row = bm.__apply_box_constraint(row)
-        return bm
+        ecm = ExactCoverMatrix(matrix, puzzle)
+        column_index = 0
+        column_index = ecm.__apply_cell_constraint(column_index)
+        column_index = ecm.__apply_row_constraint(column_index)
+        column_index = ecm.__apply_column_constraint(column_index)
+        column_index = ecm.__apply_box_constraint(column_index)
+        return ecm
 
-    def __apply_cell_constraint(self, row: int):
+    def __apply_cell_constraint(self, column_index: int):
         size = self.puzzle.size
         for r in range(0, size):
             for c in range(0, size):
                 for n in range(0, size):
-                    column = self.__calculate_column(r, c, n)
-                    # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    self.matrix[column, row] = True
-                row += 1
-        return row
+                    row_index = self.__calculate_row_index(r, c, n)
+                    self.matrix[row_index, column_index] = True
+                column_index += 1
+        return column_index
 
-    def __apply_row_constraint(self, row: int):
+    def __apply_row_constraint(self, column_index: int):
         size = self.puzzle.size
         for r in range(0, size):
             for n in range(0, size):
                 for c in range(0, size):
-                    column = self.__calculate_column(r, c, n)
-                    # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    self.matrix[column, row] = True
-                row += 1
-        return row
+                    row_index = self.__calculate_row_index(r, c, n)
+                    self.matrix[row_index, column_index] = True
+                column_index += 1
+        return column_index
 
-    def __apply_column_constraint(self, row: int):
+    def __apply_column_constraint(self, column_index: int):
         size = self.puzzle.size
         for c in range(0, size):
             for n in range(0, size):
                 for r in range(0, size):
-                    column = self.__calculate_column(r, c, n)
-                    # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                    self.matrix[column, row] = True
-                row += 1
-        return row
+                    row_index = self.__calculate_row_index(r, c, n)
+                    self.matrix[row_index, column_index] = True
+                column_index += 1
+        return column_index
 
-    def __apply_box_constraint(self, row: int):
+    def __apply_box_constraint(self, column_index: int):
         size = self.puzzle.size
         box_size = int(numpy.sqrt(size))
         for br in range(0, size, box_size):
@@ -72,13 +69,12 @@ class ExactCoverMatrix:
                 for n in range(0, size):
                     for r_delta in range(0, box_size):
                         for c_delta in range(0, box_size):
-                            column = self.__calculate_column(
+                            row_index = self.__calculate_row_index(
                                 br + r_delta, bc + c_delta, n)
-                            # print(f"{r}, {column}, {n} -> {(column, self.row)}")
-                            self.matrix[column, row] = True
-                    row += 1
-        return row
+                            self.matrix[row_index, column_index] = True
+                    column_index += 1
+        return column_index
 
-    def __calculate_column(self, row: int, column: int, iteration: int):
+    def __calculate_row_index(self, row: int, column: int, iteration: int):
         size = self.puzzle.size
         return (row * size * size) + (column * size) + iteration
