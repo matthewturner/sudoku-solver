@@ -3,7 +3,8 @@ from typing_extensions import Self
 
 class Node:
     def __init__(self, column: int, row: int,
-                 up: Self, down: Self, left: Self, right: Self):
+                 up: Self = None, down: Self = None,
+                 left: Self = None, right: Self = None):
         self.column = column
         self.row = row
         self.up = up or self

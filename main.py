@@ -1,6 +1,7 @@
 import sys
 from sudoku import *
 from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
+from sudoku.solvers.link_matrix import LinkMatrix
 
 
 def print_state(puzzle: Puzzle):
@@ -63,6 +64,9 @@ def exact_cover_matrix():
         print()
     print()
     print()
+
+    linkMatrix = LinkMatrix.build_from(matrix.matrix)
+    print(linkMatrix.root)
 
 
 if __name__ == '__main__':

@@ -16,6 +16,7 @@ class ExactCoverMatrix:
                         row_index = self.__calculate_row_index(r, c, n)
                         self.matrix[row_index] = False
 
+    @staticmethod
     def build_from(puzzle: Puzzle):
         column_count = (puzzle.size ** 2) * len(puzzle.constraints)
         row_count = puzzle.size ** 3

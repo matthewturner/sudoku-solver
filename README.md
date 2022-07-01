@@ -22,6 +22,5 @@ Or to run when files change:
 ## Dependencies
 
 ```
-pip install numpy
-pip install watchdog
+pip install -r .\requirements.txt
 ```
