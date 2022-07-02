@@ -69,15 +69,15 @@ class LinkMatrix:
         lm = LinkMatrix()
 
         lm.__initialize(matrix.shape)
+        lm.__initialize_root_node()
         lm.__initialize_row_headers()
         lm.__initialize_column_headers()
-        lm.__initialize_root_node()
         lm.__populate_from(matrix)
 
         return lm
 
     def __populate_from(self, matrix: array):
-        row_count, column_count = matrix.shape
+        column_count, row_count = matrix.shape
         for column in range(column_count):
             for row in range(row_count):
                 if matrix[row, column]:
@@ -91,7 +91,7 @@ class LinkMatrix:
         self.root.up = self.rows[-1]
 
     def __initialize(self, shape: tuple[int, int]):
-        row_count, column_count = shape
+        column_count, row_count = shape
         self.rows = [Node(row=i, column=-1)
                      for i in range(row_count)]
         self.columns = [

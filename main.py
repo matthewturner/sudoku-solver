@@ -66,10 +66,22 @@ def exact_cover_matrix():
     print()
 
     linkMatrix = LinkMatrix.build_from(matrix.matrix)
-    x = linkMatrix.root.right
-    while x != linkMatrix.root:
+    print('Column headers:')
+    x = start = linkMatrix.root.right
+    while True:
         print(f' -> ({x.column},{x.row})', end='')
         x = x.right
+        if x == start:
+            break
+    print()
+
+    print('First row:')
+    x = start = linkMatrix.root.down
+    while True:
+        print(f' -> ({x.column},{x.row})', end='')
+        x = x.right
+        if x == start:
+            break
     print()
 
 
