@@ -45,8 +45,10 @@ def main():
 
 
 def exact_cover_matrix():
-    puzzle = Puzzle(4)
-    puzzle.set(1, 0, 4)
+    puzzle = Puzzle(grid=[[1, 2, 3, 4],
+                          [3, None, 1, 2],
+                          [2, 3, None, 1],
+                          [4, 1, 2, 3]])
     matrix = ExactCoverMatrix.build_from(puzzle)
     matrix.clear_clues()
     count = 0
@@ -71,6 +73,10 @@ def exact_cover_matrix():
             print(f' -> ({c.column},{c.row})', end='')
         print()
     print()
+
+    x, y = link_matrix.search()
+    print(x)
+    print(y)
 
 
 if __name__ == '__main__':

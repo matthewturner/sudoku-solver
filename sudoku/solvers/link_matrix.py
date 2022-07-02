@@ -63,6 +63,49 @@ class LinkMatrix:
             return self.root
         return self.columns[node.column]
 
+    def search(self) -> tuple:
+        solutions = []
+
+        def __search() -> bool:
+            if self.empty():
+                return True
+
+            smallest_column = self.__smallest_column()
+            if smallest_column.count == 0:
+                return False
+
+            for candidate_row in smallest_column.iterate_down():
+                solutions.append(candidate_row.row)
+                for candidate_column in candidate_row.iterate_right(inclusive=True):
+                    if candidate_column.column >= 0:
+                        self.cover(candidate_column)
+
+                if __search():
+                    return True
+
+                solutions.pop()
+                for candidate_column in candidate_row.left.iterate_left(inclusive=True):
+                    if candidate_column.column >= 0:
+                        self.uncover(candidate_column)
+            return True
+
+        return (__search(), solutions)
+
+    def __smallest_column(self) -> Node:
+        if self.empty():
+            return self.root
+
+        min_node = self.root.right
+        min_count = self.root.right.count
+        for column_header in self.root.iterate_right():
+            if column_header.count < min_count:
+                min_node = column_header
+                min_count = column_header.count
+        return min_node
+
+    def empty(self):
+        return self.root.right == self.root
+
     @staticmethod
     def build_from(matrix: array) -> Self:
 
