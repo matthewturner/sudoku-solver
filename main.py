@@ -53,10 +53,17 @@ def exact_cover_matrix():
                                 [4, 1, 2, 3]]))
     matrix = ExactCoverMatrix.build_from(puzzle)
     matrix.clear_clues()
+
+    print()
+    print('Candate:', end='')
+    for i in range(0, matrix.matrix.shape[0]):
+        print((i % puzzle.size) + 1, end='')
+    print()
+
     count = 0
     width = 100
     for row in matrix.matrix:
-        print(f'{count}:  '.rjust(6), end='')
+        print(f'{count}:  '.rjust(8), end='')
         for index, column in enumerate(row):
             if index >= width:
                 break
@@ -66,14 +73,12 @@ def exact_cover_matrix():
                 print('.', end='')
         count += 1
         print()
-    print()
-    print()
 
     link_matrix = LinkMatrix.build_from(matrix.matrix)
 
-    print('Column counts:')
+    print('Counts:', end='')
     for c in link_matrix.root.iterate_right(inclusive=True):
-        print(f' -> ({c.column},{c.row}): {c.count}')
+        print(c.count, end='')
     print()
 
     for r in link_matrix.root.iterate_down(inclusive=True):

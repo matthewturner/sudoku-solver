@@ -73,7 +73,7 @@ class LinkMatrix:
                 return True
 
             smallest_column = self.__smallest_column()
-            if smallest_column.count <= 1:
+            if smallest_column.count < 1:
                 print('Smallest column is empty')
                 return False
 
