@@ -70,6 +70,12 @@ def exact_cover_matrix():
     print()
 
     link_matrix = LinkMatrix.build_from(matrix.matrix)
+
+    print('Column counts:')
+    for c in link_matrix.root.iterate_right(inclusive=True):
+        print(f' -> ({c.column},{c.row}): {c.count}')
+    print()
+
     for r in link_matrix.root.iterate_down(inclusive=True):
         for c in r.iterate_right(inclusive=True):
             print(f' -> ({c.column},{c.row})', end='')
