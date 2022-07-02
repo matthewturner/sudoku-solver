@@ -72,6 +72,7 @@ class LinkMatrix:
         lm.__initialize_root_node()
         lm.__initialize_row_headers()
         lm.__initialize_column_headers()
+        lm.__hook_root_node()
         lm.__populate_from(matrix)
 
         return lm
@@ -85,6 +86,8 @@ class LinkMatrix:
 
     def __initialize_root_node(self):
         self.root = Node(-1, -1)
+
+    def __hook_root_node(self):
         self.root.right = self.columns[0]
         self.root.left = self.columns[-1]
         self.root.down = self.rows[0]
@@ -101,7 +104,7 @@ class LinkMatrix:
         for i, node in enumerate(self.columns):
             node.up = node
             node.down = node
-            if i < len(self.columns)-1:
+            if i < len(self.columns) - 1:
                 node.right = self.columns[i + 1]
             else:
                 node.right = self.root
@@ -115,7 +118,7 @@ class LinkMatrix:
             node.right = node
             node.left = node
 
-            if i < len(self.rows)-1:
+            if i < len(self.rows) - 1:
                 node.down = self.rows[i + 1]
             else:
                 node.down = self.root

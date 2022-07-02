@@ -33,7 +33,7 @@ class Node:
         itr = self
         if inclusive:
             yield itr
-        while itr.up != self:
+        while itr.left != self:
             itr = itr.left
             yield itr
 
@@ -42,5 +42,5 @@ class Node:
         if inclusive:
             yield itr
         while itr.right != self:
-            itr = itr.left
+            itr = itr.right
             yield itr
