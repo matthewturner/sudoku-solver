@@ -52,12 +52,12 @@ def exact_cover_matrix():
                                 [2, 3, None, 1],
                                 [4, 1, 2, 3]]))
     matrix = ExactCoverMatrix.build_from(puzzle)
-    matrix.clear_clues()
+    # matrix.clear_clues()
 
     print()
     print('Candate:', end='')
     for i in range(0, matrix.matrix.shape[0]):
-        print((i % puzzle.size) + 1, end='')
+        print(f'{(i % puzzle.size) + 1}|', end='')
     print()
 
     count = 0
@@ -68,9 +68,9 @@ def exact_cover_matrix():
             if index >= width:
                 break
             if (column):
-                print('1', end='')
+                print('1|', end='')
             else:
-                print('.', end='')
+                print('.|', end='')
         count += 1
         print()
 
@@ -87,9 +87,43 @@ def exact_cover_matrix():
         print()
     print()
 
-    x, y = link_matrix.search()
-    print(x)
-    print(y)
+    solved, solutions = link_matrix.search()
+    print(solved)
+    print(solutions)
+
+    print()
+    print('Candate:', end='')
+    for i in range(0, matrix.matrix.shape[0]):
+        print(f'{(i % puzzle.size) + 1}|', end='')
+    print()
+
+    count = 0
+    width = 100
+    for ri, row in enumerate(matrix.matrix):
+        if ri in solutions:
+            print(f'{ri}:  '.rjust(8), end='')
+            for ci, column in enumerate(row):
+                if ci >= width:
+                    break
+                if (column):
+                    print('1|', end='')
+                else:
+                    print('.|', end='')
+            print()
+
+    if not solutions:
+        print('booo')
+    solved_puzzle = [0] * (puzzle.size**2)
+    print(solved_puzzle)
+    for row in solutions:
+        value = (row % puzzle.size) + 1
+        solved_puzzle[row // puzzle.size] = value
+        print(f'{row // puzzle.size}: ', end='')
+        print((row % puzzle.size) + 1)
+        c = row % puzzle.size
+        r = (row // puzzle.size)
+        print(f'({c},{r}) = {value}')
+    print(solved_puzzle)
 
 
 if __name__ == '__main__':
