@@ -1,4 +1,6 @@
 import sys
+
+from numpy import array
 from sudoku import *
 from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
 from sudoku.solvers.link_matrix import LinkMatrix
@@ -45,10 +47,10 @@ def main():
 
 
 def exact_cover_matrix():
-    puzzle = Puzzle(grid=[[1, 2, 3, 4],
-                          [3, None, 1, 2],
-                          [2, 3, None, 1],
-                          [4, 1, 2, 3]])
+    puzzle = Puzzle(grid=array([[1, 2, 3, 4],
+                                [3, None, 1, 2],
+                                [2, 3, None, 1],
+                                [4, 1, 2, 3]]))
     matrix = ExactCoverMatrix.build_from(puzzle)
     matrix.clear_clues()
     count = 0
