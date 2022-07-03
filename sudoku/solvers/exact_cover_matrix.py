@@ -14,7 +14,7 @@ class ExactCoverMatrix:
                 if self.puzzle.has_value(c, r):
                     value = self.puzzle.value(c, r)
                     for n in range(0, self.puzzle.size):
-                        if n == value - 1:
+                        if value == self.puzzle.candidates[n]:
                             pass
                         else:
                             row_index = self.__calculate_row_index(r, c, n)
@@ -24,7 +24,7 @@ class ExactCoverMatrix:
         '''Translates a list of covering rows to puzzle solutions'''
         solutions = []
         for row in rows:
-            value = (row % self.puzzle.size) + 1
+            value = self.puzzle.candidates[(row % self.puzzle.size)]
             solution_index = row // self.puzzle.size
             c = solution_index % self.puzzle.size
             r = solution_index // self.puzzle.size
