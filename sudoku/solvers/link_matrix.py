@@ -121,7 +121,7 @@ class LinkMatrix:
         return lm
 
     def __populate_from(self, matrix: array):
-        column_count, row_count = matrix.shape
+        row_count, column_count = matrix.shape
         for column in range(column_count):
             for row in range(row_count):
                 if matrix[row, column]:
@@ -137,7 +137,7 @@ class LinkMatrix:
         self.root.up = self.rows[-1]
 
     def __initialize(self, shape: tuple[int, int]):
-        column_count, row_count = shape
+        row_count, column_count = shape
         self.rows = [Node(row=i, column=-1)
                      for i in range(row_count)]
         self.columns = [

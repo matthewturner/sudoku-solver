@@ -1,6 +1,7 @@
 import sys
 
 from numpy import array
+import numpy
 from sudoku import *
 from sudoku.solvers.dancing_links_solver import DancingLinksSolver
 from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
@@ -14,16 +15,22 @@ def print_state(puzzle: Puzzle):
 
 def print_matrix(puzzle: Puzzle, matrix: array):
     print('Candate:  ', end='')
-    for i in range(0, matrix.shape[0]):
-        print(f'{(i % puzzle.size) + 1}|', end='')
+
+    max_width = 66
+    _, column_count = matrix.shape
+    for i in range(0, column_count):
+        if i >= max_width:
+            break
+        candidate = PuzzleSerializer.serialize_value(
+            puzzle.candidates[(i % puzzle.size)])
+        print(f'{candidate}|', end='')
     print()
 
     count = 0
-    width = 100
     for row in matrix:
         print(f'{count}:  '.rjust(10), end='')
         for index, column in enumerate(row):
-            if index >= width:
+            if index >= max_width:
                 break
             if (column):
                 print('1|', end='')

@@ -19,12 +19,16 @@ class PuzzleSerializer:
                     if only_numbers:
                         definition += str(value).rjust(justification)
                     else:
-                        if value <= 9:
-                            definition += str(value).rjust(justification)
-                        else:
-                            definition += chr(value).rjust(justification)
+                        char = PuzzleSerializer.serialize_value(value)
+                        definition += char.rjust(justification)
             definition += '\n'
         return definition
+
+    def serialize_value(value: int) -> str:
+        if value <= 9:
+            return str(value)
+        else:
+            return chr(value)
 
     def deserialize(definition: str):
         while '  ' in definition:
