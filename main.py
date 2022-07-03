@@ -1,11 +1,8 @@
 import sys
 
 from numpy import array
-import numpy
 from sudoku import *
 from sudoku.solvers.dancing_links_solver import DancingLinksSolver
-from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
-from sudoku.solvers.link_matrix import LinkMatrix
 
 
 def print_state(puzzle: Puzzle):
@@ -14,10 +11,18 @@ def print_state(puzzle: Puzzle):
 
 
 def print_matrix(puzzle: Puzzle, matrix: array):
+    row_count, column_count = matrix.shape
+
+    if puzzle.size >= 16:
+        print('Exact cover matrix too big to display')
+        print(f'\tColumns >: {column_count}')
+        print(f'\tRows v:    {row_count}')
+        print()
+        return
+
     print('Candate:  ', end='')
 
     max_width = 66
-    _, column_count = matrix.shape
     for i in range(0, column_count):
         if i >= max_width:
             break
@@ -38,6 +43,11 @@ def print_matrix(puzzle: Puzzle, matrix: array):
                 print('.|', end='')
         count += 1
         print()
+    print()
+
+    print('Exact cover matrix')
+    print(f'\tColumns >: {column_count}')
+    print(f'\tRows v:    {row_count}')
     print()
 
 
@@ -74,6 +84,7 @@ def main():
         print()
     else:
         print('No solution found')
+        print()
 
 
 if __name__ == '__main__':
