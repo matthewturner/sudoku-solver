@@ -6,24 +6,30 @@ from .exact_cover_matrix import ExactCoverMatrix
 
 class DancingLinksSolver:
     def __init__(self):
-        self.change_listener = None
+        self.on_covering_listener = None
 
     def solve(self, puzzle: Puzzle):
-        matrix = ExactCoverMatrix.build_from(puzzle)
-        matrix.clear_clues()
+        exact_cover_matrix = ExactCoverMatrix.build_from(puzzle)
 
-        link_matrix = LinkMatrix.build_from(matrix.matrix)
-        solved, solutions = link_matrix.search()
+        if self.on_covering_listener is not None:
+            self.on_covering_listener(puzzle, exact_cover_matrix.matrix)
 
-        if not solved:
+        exact_cover_matrix.clear_clues()
+
+        if self.on_covering_listener is not None:
+            self.on_covering_listener(puzzle, exact_cover_matrix.matrix)
+
+        link_matrix = LinkMatrix.build_from(exact_cover_matrix.matrix)
+
+        can_be_covered, covering_rows = link_matrix.search()
+
+        if not can_be_covered:
             return False
 
-        for row in solutions:
-            value = (row % puzzle.size) + 1
-            solution_index = row // puzzle.size
-            c = solution_index % puzzle.size
-            r = solution_index // puzzle.size
-            if not puzzle.has_value(c, r):
-                puzzle.set(c, r, value)
+        solutions = exact_cover_matrix.translate(covering_rows)
 
-        return _threads_queues
+        for column, row, value in solutions:
+            if not puzzle.has_value(column, row):
+                puzzle.set(column, row, value)
+
+        return True

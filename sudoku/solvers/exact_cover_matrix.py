@@ -20,6 +20,17 @@ class ExactCoverMatrix:
                             row_index = self.__calculate_row_index(r, c, n)
                             self.matrix[row_index] = False
 
+    def translate(self, rows: list[int]) -> tuple:
+        '''Translates a list of covering rows to puzzle solutions'''
+        solutions = []
+        for row in rows:
+            value = (row % self.puzzle.size) + 1
+            solution_index = row // self.puzzle.size
+            c = solution_index % self.puzzle.size
+            r = solution_index // self.puzzle.size
+            solutions.append((c, r, value))
+        return solutions
+
     @staticmethod
     def build_from(puzzle: Puzzle):
         column_count = (puzzle.size ** 2) * len(puzzle.constraints)
