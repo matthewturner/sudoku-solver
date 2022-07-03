@@ -12,9 +12,13 @@ class ExactCoverMatrix:
         for r in range(0, self.puzzle.size):
             for c in range(0, self.puzzle.size):
                 if self.puzzle.has_value(c, r):
+                    value = self.puzzle.value(c, r)
                     for n in range(0, self.puzzle.size):
-                        row_index = self.__calculate_row_index(r, c, n)
-                        self.matrix[row_index] = False
+                        if n == value - 1:
+                            pass
+                        else:
+                            row_index = self.__calculate_row_index(r, c, n)
+                            self.matrix[row_index] = False
 
     @staticmethod
     def build_from(puzzle: Puzzle):

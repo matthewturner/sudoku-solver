@@ -2,6 +2,7 @@ import sys
 
 from numpy import array
 from sudoku import *
+from sudoku.solvers.dancing_links_solver import DancingLinksSolver
 from sudoku.solvers.exact_cover_matrix import ExactCoverMatrix
 from sudoku.solvers.link_matrix import LinkMatrix
 
@@ -29,9 +30,9 @@ def main():
 
     print()
 
-    solver = IterativeSolver()
+    solver = DancingLinksSolver()
 
-    solver.change_listener = print_state
+    #solver.change_listener = print_state
 
     if solver.solve(puzzle):
         print()
@@ -52,10 +53,10 @@ def exact_cover_matrix():
                                 [2, 3, None, 1],
                                 [4, 1, 2, 3]]))
     matrix = ExactCoverMatrix.build_from(puzzle)
-    # matrix.clear_clues()
+    matrix.clear_clues()
 
     print()
-    print('Candate:', end='')
+    print('Candate:  ', end='')
     for i in range(0, matrix.matrix.shape[0]):
         print(f'{(i % puzzle.size) + 1}|', end='')
     print()
@@ -63,7 +64,7 @@ def exact_cover_matrix():
     count = 0
     width = 100
     for row in matrix.matrix:
-        print(f'{count}:  '.rjust(8), end='')
+        print(f'{count}:  '.rjust(10), end='')
         for index, column in enumerate(row):
             if index >= width:
                 break
@@ -76,9 +77,9 @@ def exact_cover_matrix():
 
     link_matrix = LinkMatrix.build_from(matrix.matrix)
 
-    print('Counts:', end='')
+    print(' Counts:', end='')
     for c in link_matrix.root.iterate_right(inclusive=True):
-        print(c.count, end='')
+        print(f'{c.count}|', end='')
     print()
 
     for r in link_matrix.root.iterate_down(inclusive=True):
@@ -92,7 +93,7 @@ def exact_cover_matrix():
     print(solutions)
 
     print()
-    print('Candate:', end='')
+    print('Candate:  ', end='')
     for i in range(0, matrix.matrix.shape[0]):
         print(f'{(i % puzzle.size) + 1}|', end='')
     print()
@@ -101,7 +102,7 @@ def exact_cover_matrix():
     width = 100
     for ri, row in enumerate(matrix.matrix):
         if ri in solutions:
-            print(f'{ri}:  '.rjust(8), end='')
+            print(f'{ri}:  '.rjust(10), end='')
             for ci, column in enumerate(row):
                 if ci >= width:
                     break
@@ -111,21 +112,29 @@ def exact_cover_matrix():
                     print('.|', end='')
             print()
 
+    print()
+    definition = PuzzleSerializer.serialize(puzzle)
+    print(definition)
+    print()
+
     if not solutions:
         print('booo')
-    solved_puzzle = [0] * (puzzle.size**2)
-    print(solved_puzzle)
+        return
     for row in solutions:
         value = (row % puzzle.size) + 1
-        solved_puzzle[row // puzzle.size] = value
-        print(f'{row // puzzle.size}: ', end='')
-        print((row % puzzle.size) + 1)
-        c = row % puzzle.size
-        r = (row // puzzle.size)
-        print(f'({c},{r}) = {value}')
-    print(solved_puzzle)
+        solution_index = row // puzzle.size
+        c = column_index = solution_index % puzzle.size
+        r = row_index = solution_index // puzzle.size
+        if value == 4:
+            print(f'{row}: ({c},{r}) = {value}')
+        if not puzzle.has_value(c, r):
+            puzzle.set(c, r, value)
+
+    print()
+    definition = PuzzleSerializer.serialize(puzzle)
+    print(definition)
 
 
 if __name__ == '__main__':
-    # main()
-    exact_cover_matrix()
+    main()
+    # exact_cover_matrix()
