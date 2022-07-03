@@ -28,7 +28,7 @@ class ExactCoverMatrix:
             solution_index = row // self.puzzle.size
             c = solution_index % self.puzzle.size
             r = solution_index // self.puzzle.size
-            solutions.append((c, r, value))
+            solutions.append((row, c, r, value))
         return solutions
 
     @staticmethod

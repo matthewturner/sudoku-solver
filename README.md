@@ -7,7 +7,7 @@ The obligatory sudoku solver
 1. Recursive brute-force - very naive
 1. Parallel Recursive - very naive and also complicated
 1. Iterative - does not solve all puzzles
-1. Dancing Links - not done yet
+1. Dancing Links - solves 25x25 puzzles in a few seconds
 
 ## Running it in console
 
