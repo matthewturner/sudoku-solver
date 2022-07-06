@@ -85,6 +85,7 @@ def main():
     solver.on_clues_filtered_listener = print_matrix
     solver.on_covered_listener = print_matrix
     solver.on_solution_found = print_matrix
+    solver.on_partial_solution_found = print_state
 
     if solver.solve(puzzle):
         print()

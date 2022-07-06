@@ -10,6 +10,7 @@ class DancingLinksSolver:
         self.on_clues_filtered_listener = None
         self.on_covered_listener = None
         self.on_solution_found = None
+        self.on_partial_solution_found = None
 
     def solve(self, puzzle: Puzzle):
         exact_cover_matrix = ExactCoverMatrix.build_from(puzzle)
@@ -42,5 +43,10 @@ class DancingLinksSolver:
 
         if self.on_solution_found is not None:
             self.on_covered_listener(puzzle, exact_cover_matrix, solution_rows)
+
+        if len(covering_rows) < puzzle.size ** 2:
+            if self.on_partial_solution_found is not None:
+                self.on_partial_solution_found(puzzle)
+            return False
 
         return True
