@@ -1,5 +1,7 @@
 # Sudoku Solver
 
+[![CI](https://github.com/matthewturner/sudoku-solver/actions/workflows/ci.yml/badge.svg)](https://github.com/matthewturner/sudoku-solver/actions/workflows/ci.yml)
+
 The obligatory sudoku solver
 
 ## Solvers
